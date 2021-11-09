@@ -1,52 +1,57 @@
 # USAGE
 # python build_siamese_pairs.py
 from pathlib import Path
-from cvutils. build_montages
 import numpy as np
 import cv2
 import argparse
-
-def make_random_pairs(images, labels):
-	# initialize two empty lists to hold the (image, image) pairs and
-	# labels to indicate if a pair is positive or negative
+from imutils import build_montages
+#ideally we can generate nC2 pairs but using this strategy, we will generate n random pairs
+def make_random_pairs(images, labels,labelsmap=False):
+	if(isinstance(labels[0],str)):
+		encoded=False
+	elif (isinstance(int(labels[0]),int)):
+		encoded=True
+	else:
+		raise ValueError("labels must be either int or str")
+	# initialize two empty lists to hold the (image, image) pairs and labels
 	pairImages = []
 	pairLabels = []
-
-	# calculate the total number of classes present in the dataset
-	# and then build a list of indexes for each class label that
-	# provides the indexes for all examples with a given label
 	numClasses = len(np.unique(labels))
-	idx = [np.where(labels == i)[0] for i in range(0, numClasses)]
-
-	# loop over all images
+	if not encoded:
+		classnames = np.array(sorted(np.unique(labels)))
+		labels=list(map(lambda x: np.argmax(x==classnames),labels))
+		dictmap=dict(zip(list(range(len(classnames))),classnames))
+	idx = [np.where(np.array(labels) == i)[0] for i in range(numClasses)]
+	assert sum(list(map(len,idx)))==len(labels)
 	for idxA in range(len(images)):
-		# grab the current image and label belonging to the current
-		# iteration
+		# grab the current image and label belonging to the current iteration
 		currentImage = images[idxA]
 		label = labels[idxA]
 
-		# randomly pick an image that belongs to the *same* class
-		# label
+		# grab a random image from same class
 		idxB = np.random.choice(idx[label])
 		posImage = images[idxB]
 
-		# prepare a positive pair and update the images and labels
-		# lists, respectively
+		#append a positive pair
 		pairImages.append([currentImage, posImage])
 		pairLabels.append([1])
 
-		# grab the indices for each of the class labels *not* equal to
-		# the current label and randomly pick an image corresponding
-		# to a label *not* equal to the current label
+		# grab a random image from the different class label
 		negIdx = np.random.choice(np.where(labels != label)[0])
 		negImage = images[negIdx]
 
-		# prepare a negative pair of images and update our lists
+		# append a negative pair
 		pairImages.append([currentImage, negImage])
 		pairLabels.append([0])
-
-	# return a 2-tuple of our image pairs and labels
-	return (np.array(pairImages), np.array(pairLabels))
+	
+	if labelsmap:
+		if encoded:
+			raise Exception("Cannot return dict map for already encoded labels")
+		# return a 2-tuple of our image pairs and labels
+		return np.array(pairImages), np.array(pairLabels),dictmap
+	else:
+		# return a 2-tuple of our image pairs and labels and a dict which maps the label to the classname
+		return ( np.array(pairImages), np.array(pairLabels))
 
 
 if __name__ == "__main__":
@@ -73,8 +78,6 @@ if __name__ == "__main__":
 	(pairTrain, labelTrain) = make_random_pairs(trainX, trainY)
 	(pairTest, labelTest) = make_random_pairs(testX, testY)
 
-	# initialize the list of images that will be used when building our
-	# montage
 	images = []
 
 	# loop over a sample of our training pairs
@@ -83,31 +86,17 @@ if __name__ == "__main__":
 		imageA = pairTrain[i][0]
 		imageB = pairTrain[i][1]
 		label = labelTrain[i]
-
-		# to make it easier to visualize the pairs and their positive or
-		# negative annotations, we're going to "pad" the pair with four
-		# pixels along the top, bottom, and right borders, respectively
 		output = np.zeros((36, 60), dtype="uint8")
 		pair = np.hstack([imageA, imageB])
 		output[4:32, 0:56] = pair
-
-		# set the text label for the pair along with what color we are
-		# going to draw the pair in (green for a "positive" pair and
-		# red for a "negative" pair)
 		text = "neg" if label[0] == 0 else "pos"
 		color = (0, 0, 255) if label[0] == 0 else (0, 255, 0)
-
-		# create a 3-channel RGB image from the grayscale pair, resize
-		# it from 28x28 to 96x51 (so we can better see it), and then
-		# draw what type of pair it is on the image
 		vis = cv2.merge([output] * 3)
 		vis = cv2.resize(vis, (96, 51), interpolation=cv2.INTER_LINEAR)
 		cv2.putText(vis, text, (2, 12), cv2.FONT_HERSHEY_SIMPLEX, 0.75,
 			color, 2)
-
 		# add the pair visualization to our list of output images
 		images.append(vis)
-
 	# construct the montage for the images
 	montage = build_montages(images, (96, 51), (rows, columns))[0]
 	cv2.imwrite("siamese_pairs.png", montage)
