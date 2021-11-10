@@ -14,8 +14,9 @@ def make_random_pairs(images, labels,labelsmap=False):
 	else:
 		raise ValueError("labels must be either int or str")
 	# initialize two empty lists to hold the (image, image) pairs and labels
-	pairImages = []
-	pairLabels = []
+	ImagesA = []
+	ImagesB = []
+	pairLabels=[]
 	numClasses = len(np.unique(labels))
 	if not encoded:
 		classnames = np.array(sorted(np.unique(labels)))
@@ -33,7 +34,8 @@ def make_random_pairs(images, labels,labelsmap=False):
 		posImage = images[idxB]
 
 		#append a positive pair
-		pairImages.append([currentImage, posImage])
+		ImagesA.append(currentImage)
+		ImagesB.append(posImage)
 		pairLabels.append([1])
 
 		# grab a random image from the different class label
@@ -41,17 +43,18 @@ def make_random_pairs(images, labels,labelsmap=False):
 		negImage = images[negIdx]
 
 		# append a negative pair
-		pairImages.append([currentImage, negImage])
+		ImagesA.append(currentImage)
+		ImagesB.append(negImage)
 		pairLabels.append([0])
 	
 	if labelsmap:
 		if encoded:
 			raise Exception("Cannot return dict map for already encoded labels")
 		# return a 2-tuple of our image pairs and labels
-		return np.array(pairImages), np.array(pairLabels),dictmap
+		return ImagesA,ImagesB,pairLabels,dictmap
 	else:
 		# return a 2-tuple of our image pairs and labels and a dict which maps the label to the classname
-		return ( np.array(pairImages), np.array(pairLabels))
+		return ImagesA,ImagesB,pairLabels
 
 
 if __name__ == "__main__":
