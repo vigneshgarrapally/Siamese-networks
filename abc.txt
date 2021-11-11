@@ -1,0 +1,138 @@
+python/
+├── check_file_type.py
+├── download.py
+├── extract_frames_from_video.py
+├── find_course_duration_new.py
+├── generate_polar_images.ipynb
+├── htmltopdf.py
+├── internet speed.py
+├── lime-master/
+│   ├── .gitignore
+│   ├── .travis.yml
+│   ├── benchmark/
+│   │   ├── __init__.py
+│   │   ├── table_perf.py
+│   │   └── text_perf.py
+│   ├── binder/
+│   │   └── environment.yml
+│   ├── citation.bib
+│   ├── CONTRIBUTING.md
+│   ├── doc/
+│   │   ├── blog_post.md
+│   │   ├── conf.py
+│   │   ├── images/
+│   │   │   ├── image_from_paper.png
+│   │   │   ├── images.png
+│   │   │   ├── lime.png
+│   │   │   ├── multiclass.png
+│   │   │   ├── tabular.png
+│   │   │   ├── twoclass.png
+│   │   │   └── video_screenshot.png
+│   │   ├── index.rst
+│   │   ├── lime.rst
+│   │   └── notebooks/
+│   │       ├── .ipynb_checkpoints/
+│   │       │   ├── Tutorial - images - Pytorch-checkpoint.ipynb
+│   │       │   └── Tutorial - images-checkpoint.ipynb
+│   │       ├── data/
+│   │       │   ├── adult.csv
+│   │       │   ├── cat_mouse.jpg
+│   │       │   ├── co2_data.csv
+│   │       │   ├── dogs.png
+│   │       │   ├── imagenet_class_index.json
+│   │       │   └── mushroom_data.csv
+│   │       ├── Latin Hypercube Sampling.ipynb
+│   │       ├── Lime - basic usage, two class case.ipynb
+│   │       ├── Lime - multiclass.ipynb
+│   │       ├── Lime with Recurrent Neural Networks.ipynb
+│   │       ├── Submodular Pick examples.ipynb
+│   │       ├── Tutorial - continuous and categorical features.ipynb
+│   │       ├── Tutorial - Faces and GradBoost.ipynb
+│   │       ├── Tutorial - Image Classification Keras.ipynb
+│   │       ├── Tutorial - images - Pytorch.ipynb
+│   │       ├── Tutorial - images.ipynb
+│   │       ├── Tutorial - MNIST and RF.ipynb
+│   │       ├── Tutorial_H2O_continuous_and_cat.ipynb
+│   │       └── Using lime for regression.ipynb
+│   ├── LICENSE
+│   ├── lime/
+│   │   ├── __init__.py
+│   │   ├── bundle.js
+│   │   ├── bundle.js.map
+│   │   ├── discretize.py
+│   │   ├── exceptions.py
+│   │   ├── explanation.py
+│   │   ├── js/
+│   │   │   ├── bar_chart.js
+│   │   │   ├── explanation.js
+│   │   │   ├── main.js
+│   │   │   ├── predict_proba.js
+│   │   │   └── predicted_value.js
+│   │   ├── lime_base.py
+│   │   ├── lime_image.py
+│   │   ├── lime_tabular.py
+│   │   ├── lime_text.py
+│   │   ├── package.json
+│   │   ├── style.css
+│   │   ├── submodular_pick.py
+│   │   ├── test_table.html
+│   │   ├── tests/
+│   │   │   ├── __init__.py
+│   │   │   ├── test_discretize.py
+│   │   │   ├── test_generic_utils.py
+│   │   │   ├── test_lime_tabular.py
+│   │   │   ├── test_lime_text.py
+│   │   │   └── test_scikit_image.py
+│   │   ├── utils/
+│   │   │   ├── __init__.py
+│   │   │   └── generic_utils.py
+│   │   ├── webpack.config.js
+│   │   └── wrappers/
+│   │       ├── __init__.py
+│   │       └── scikit_image.py
+│   ├── MANIFEST.in
+│   ├── README.md
+│   ├── setup.cfg
+│   └── setup.py
+├── list tree structure.py
+├── Matplotlib/
+│   ├── .ipynb_checkpoints/
+│   │   └── Matplotlib-checkpoint.ipynb
+│   ├── barchart.png
+│   ├── fifa_data.csv
+│   ├── gas_prices.csv
+│   ├── Matplotlib Tutorial.ipynb
+│   ├── Matplotlib.ipynb
+│   └── mygraph.png
+├── Numpy/
+│   ├── .ipynb_checkpoints/
+│   │   └── Numpy module-checkpoint.ipynb
+│   ├── Author/
+│   │   ├── NumPy-master/
+│   │   │   ├── data.txt
+│   │   │   ├── NumPy Tutorial.ipynb
+│   │   │   └── README.md
+│   │   └── Python NumPy Tutorial for Beginners.mp4
+│   ├── data.csv
+│   ├── data.txt
+│   ├── file1.csv
+│   ├── NumPy - Data Types - Tutorialspoint.pdf
+│   ├── Numpy module.ipynb
+│   ├── Screenshot (675).png
+│   └── Why Numpy is faster/
+│       ├── Screenshot (671).png
+│       ├── Screenshot (672).png
+│       ├── Screenshot (673).png
+│       └── Screenshot (674).png
+├── OpenCV/
+│   ├── .ipynb_checkpoints/
+│   ├── cat.jpeg
+│   ├── demo.mp4
+│   └── OpenCV.ipynb
+├── OS module.ipynb
+├── pdfmerge.py
+├── scrape_index.py
+├── separate_files.py
+├── ShowCartesian_image(skimage).py
+├── spleeter.ipynb
+└── youtube-dl-trim/

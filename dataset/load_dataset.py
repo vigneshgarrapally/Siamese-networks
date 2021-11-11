@@ -10,10 +10,12 @@ channels=config.channels
 shape=config.IMAGE_SHAPE
 def load_images(input1,input2,input3):
 	imageA = tf.io.read_file(input1)
-	imageA = tf.image.decode_image(imageA, channels=3)
+	imageA = tf.image.decode_image(imageA, channels=3,expand_animations=False)
+	imageA = tf.image.convert_image_dtype(imageA, tf.float32)
 	imageA = tf.image.resize(imageA, shape)
 	imageB = tf.io.read_file(input2)
-	imageB = tf.image.decode_image(imageB, channels=channels)
+	imageB = tf.image.decode_image(imageB, channels=channels,expand_animations=False)
+	imageB = tf.image.convert_image_dtype(imageB, tf.float32)
 	imageB = tf.image.resize(imageB,shape)
 	encodedLabel = input3
 	# return the image and the integer encoded label
@@ -21,7 +23,7 @@ def load_images(input1,input2,input3):
 
 
 trainAug = Sequential([
-	preprocessing.Rescaling(scale=1.0 / 255),
+	# preprocessing.Rescaling(scale=1.0 / 255),
 	preprocessing.RandomFlip("horizontal_and_vertical"),
 	preprocessing.RandomZoom(
 		height_factor=(-0.05, -0.15),
@@ -29,12 +31,10 @@ trainAug = Sequential([
 	preprocessing.RandomRotation(0.3)
 ])
 
-testAug = Sequential([
-	preprocessing.Rescaling(scale=1.0 / 255)
-])
 
 def augment(imageA,imageB,label):
-	#do data augmentation
+	imageA=trainAug(imageA)
+	imageB=trainAug(imageB)
 	return (imageA,imageB,label)
 
 def build_dataset():
