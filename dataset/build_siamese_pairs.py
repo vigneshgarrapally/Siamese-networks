@@ -74,21 +74,20 @@ if __name__ == "__main__":
 	columns=args.display[1]
 	# load MNIST dataset and scale the pixel values to the range of [0, 1]
 	print("[INFO] loading MNIST dataset...")
-	(trainX, trainY), (testX, testY) = mnist.load_data()
+	(_, _), (testX, testY) = mnist.load_data()
 
 	# build the positive and negative image pairs
 	print("[INFO] preparing positive and negative pairs...")
-	(pairTrain, labelTrain) = make_random_pairs(trainX, trainY)
-	(pairTest, labelTest) = make_random_pairs(testX, testY)
+	testA,testB,testY = make_random_pairs(testX, testY)
 
 	images = []
 
 	# loop over a sample of our training pairs
-	for i in np.random.choice(np.arange(0, len(pairTrain)), size=(49,)):
+	for i in np.random.choice(np.arange(0, len(testA)), size=(49,)):
 		# grab the current image pair and label
-		imageA = pairTrain[i][0]
-		imageB = pairTrain[i][1]
-		label = labelTrain[i]
+		imageA = testA[i]
+		imageB = testB[i]
+		label = testY[i]
 		output = np.zeros((36, 60), dtype="uint8")
 		pair = np.hstack([imageA, imageB])
 		output[4:32, 0:56] = pair

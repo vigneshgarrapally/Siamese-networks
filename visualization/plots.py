@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import tensorflow as tf
-def plot_training(H, plotPath,metric=None):
+def plot_metrics(H, plotPath,metric=None):
     if(isinstance(H,tf.keras.callbacks.History)):
         H = H.history
 	plt.style.use("ggplot")
